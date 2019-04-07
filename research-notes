@@ -1,0 +1,165 @@
+###
+
+http://www.passwordtool.hu/wordpress-password-hash-generator-v3-v4
+For modifying the mySQL database for Wordpress for a particular user's password
+
+Steps:
+1. Sudo exec -it mySQL-docker-name /bin/bash
+2. in the login shell, enter command 
+mysql -u root -p 
+ENTER PASSWORD
+mysql>  use wordpress
+mysql>  show tables
+mysql>  select * from wp_users
+mysql>  update wp_users set user_pass = "THE-PASSWORD-GENERATED-IN-THE-ABOVE-LINK" where ID =  
+
+
+*mysql syntax:
+
+$ mysql -u your-user-name -p'Your-password' 
+
+###
+
+show mysql version: mysql -h localhost -V
+
+###
+
+release all docker caches: docker system prune
+
+This will remove:
+        - all stopped containers
+        - all networks not used by at least one container
+        - all dangling images
+        - all build cache
+
+###
+force docker to rebuild images: docker-compose up --build 
+
+
+###
+The docker PHP Apache Container is a container with no php.ini file setup
+if you want to install additional php extensions, add this to Dockerfile:
+RUN docker-php-ext-install EXTENSION-TO-BE-ADDED
+ 
+For example:
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
+to intall mysqli 
+
+
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+to install pdo pdo_mysql and mysqli
+
+###
+Create a  php file with the following content to show your php configuration:
+
+
+<?php
+
+// Show all information, defaults to INFO_ALL
+phpinfo();
+
+?>
+
+point your browser to this file to show php configurations
+
+####
+
+php file to check database connections:
+
+<?php
+# Fill our vars and run on cli
+# $ php -f db-connect-test.php
+
+$dbname = 'wordpress';
+$dbuser = 'root';
+$dbpass = 'password';
+$dbhost = 'db:3306';
+
+$link = mysqli_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
+mysqli_select_db($link, $dbname) or die("Could not open the db '$dbname'");
+
+$test_query = "SHOW TABLES FROM $dbname";
+$result = mysqli_query($link, $test_query);
+
+$tblCnt = 0;
+while($tbl = mysqli_fetch_array($result)) {
+  $tblCnt++;
+  #echo $tbl[0]."<br />\n";
+}
+
+if (!$tblCnt) {
+  echo "There are no tables<br />\n";
+} else {
+  echo "There are $tblCnt tables<br />\n";
+} 
+?>
+
+###
+
+MySQL latest version list:
+
+https://dev.mysql.com/downloads/mysql/
+
+#####
+
+Use Nginx as a reverse proxy to our Docker Container
+https://stephenafamo.com/blog/moving-wordpress-docker-container/
+https://stephenafamo.com/blog/docker-container-nginx-lets-encrypt/
+
+#####
+
+Run filemanager with root permission in Linux Mint:
+
+Sudo nemo;
+
+
+#######
+
+How can I use docker without sudo?
+
+Not recommended as sometimes it does not work if run docker without sudo
+
+https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo
+
+#######
+
+Docker-compose latest releases:
+https://github.com/docker/compose/releases/tag/1.24.0
+
+How to install docker-compose:
+https://linuxize.com/post/how-to-install-and-use-docker-compose-on-ubuntu-18-04/
+
+########
+
+PHP Versions
+
+https://www.php.net/downloads.php
+
+########
+Docker Hub for Mysql server:
+
+https://hub.docker.com/r/mysql/mysql-server/tags/?page=3
+
+
+####
+check PHP version
+
+php -v
+
+
+#######
+
+To recursively give directories read&execute privileges:
+
+find /path/to/base/dir -type d -exec chmod 755 {} +
+
+
+######
+
+Enable the mod rewrite of apache
+* To Fix Broken Permalinks In WordPress
+
+from the command line, type
+
+sudo a2enmod rewrite

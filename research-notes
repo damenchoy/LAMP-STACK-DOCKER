@@ -8,10 +8,10 @@ Steps:
 2. in the login shell, enter command 
 mysql -u root -p 
 ENTER PASSWORD
-mysql>  use wordpress
-mysql>  show tables
-mysql>  select * from wp_users
-mysql>  update wp_users set user_pass = "THE-PASSWORD-GENERATED-IN-THE-ABOVE-LINK" where ID =  
+mysql>  use wordpress;
+mysql>  show tables;
+mysql>  select * from wp_users;
+mysql>  update wp_users set user_pass = "THE-PASSWORD-GENERATED-IN-THE-ABOVE-LINK" where ID =  <<the ID of the particular user>>;
 
 
 *mysql syntax:

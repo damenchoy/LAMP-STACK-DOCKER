@@ -163,3 +163,11 @@ Enable the mod rewrite of apache
 from the command line, type
 
 sudo a2enmod rewrite
+
+#############################
+
+When create the phpMyAdmin containter, please make sure link it to the database container
+links:
+  -db
+
+https://stackoverflow.com/questions/35729083/how-to-link-two-containers-using-docker-compose

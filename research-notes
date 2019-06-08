@@ -171,3 +171,20 @@ links:
   -db
 
 https://stackoverflow.com/questions/35729083/how-to-link-two-containers-using-docker-compose
+
+
+################################
+Docker-compose commands:
+
+Force rebuild all images:
+
+docker-compose up -d --force-recreate --build
+From the help menu
+
+Options:
+  -d                  Detached mode: Run containers in the background,
+                      print new container names. Incompatible with
+                      --abort-on-container-exit.
+  --force-recreate    Recreate containers even if their configuration
+                      and image haven't changed.
+  --build             Build images before starting containers.

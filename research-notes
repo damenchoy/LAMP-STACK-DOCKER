@@ -188,3 +188,39 @@ Options:
   --force-recreate    Recreate containers even if their configuration
                       and image haven't changed.
   --build             Build images before starting containers.
+
+
+*****************
+28 March 2020
+
+How to enable autoupdate in Wordpress
+
+1.
+Install FTP server into your host machine that runs docker
+https://www.digitalocean.com/community/tutorials/how-to-set-up-vsftpd-for-a-user-s-directory-on-ubuntu-16-04
+
+sudo apt-get install vsftpd
+
+2.
+Check firewall status
+sudo ufw status
+
+3. sudo nano /etc/vsftpd.conf
+Check if 
+write_enable=YES
+
+4. modify wp-config.php
+
+define( 'FTP_BASE', '/home/damen/repo/LAMP-STACK-DOCKER/wp_data/' );
+define( 'FTP_CONTENT_DIR', '/home/damen/repo/LAMP-STACK-DOCKER/wp_data/wp-content');
+define( 'FTP_PLUGIN_DIR ', '/home/damen/repo/LAMP-STACK-DOCKER/wp_data/wp-content/plugins');
+
+5. ssh to your web docker container
+https://stackoverflow.com/questions/44251019/wordpress-on-docker-could-not-create-directory-on-mounted-volume
+docker exec -it <container_name> /bin/bash
+
+chown -R www-data:www-data /var/www
+
+
+6. carry out the updte in the wordpress admin panel with the correct username and password of your host (not your docker image)
+
